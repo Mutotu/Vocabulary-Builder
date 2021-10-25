@@ -15,8 +15,7 @@ If a person answers 5 definitions out of 8, they proceed to the next level until
 
 ## Wireframes
 
-Wireframe of start page
-![That is a caption of my wireframe]("")
+![That is a caption of my wireframe]("wireframe.png")
 ...
 ​
 ​
@@ -34,6 +33,7 @@ Organize these into most foundational to your functionality, to least.
 -Need to get data for words by tomorrow night
 -Separate the words from their definitions by tomorrow night
 -Work on each functions to test them if they work.
+-Functions for => cheking spelling, settiming, data retriving,comparing between input and definition
 
 ​
 
