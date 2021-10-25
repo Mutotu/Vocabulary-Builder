@@ -16,7 +16,7 @@ If a person answers 5 definitions out of 8, they proceed to the next level until
 ## Wireframes
 
 Wireframe of start page
-![That is a caption of my wireframe]('wireframe.png')
+![That is a caption of my wireframe]("")
 ...
 ​
 ​
