@@ -1,0 +1,41 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* section {
+  display: grid;
+  grid-template-columns: repeat(1, 6vmin);
+  grid-template-rows: repeat(8, 6vmin);
+  gap: 0.5vmin;
+}
+
+/* This selects the div elements */
+.defs {
+  border: 1vmin solid rgb(218, 176, 176);
+  height: 5vmin;
+}
+
+.float-container {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-gap: 8px;
+}
+
+.float-child {
+  width: 50%;
+  /* float: left; */
+  padding: 20px;
+
+  border: 1vmin solid rgb(46, 25, 25);
+}
+span {
+  font-weight: bold;
+  color: brown;
+}

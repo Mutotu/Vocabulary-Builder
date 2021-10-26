@@ -29,9 +29,9 @@ I start reading the definitions and try to guess what they are. And then I write
 
 List out requirements and dates to complete by.
 Organize these into most foundational to your functionality, to least.
--Html and Css need to be done by tonight.
--Need to get data for words by tomorrow night
--Separate the words from their definitions by tomorrow night
+-Html and Css need to be done
+-Need to get data for words
+-Separate the words from their definitions
 -Work on each functions to test them if they work.
 -Functions for => cheking spelling, settiming, data retriving,comparing between input and definition
 
