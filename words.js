@@ -307,4 +307,4 @@ var words = [
   { tirade: "a speech of violent denunciation" },
 ];
 
-export { words };
+// export { words };

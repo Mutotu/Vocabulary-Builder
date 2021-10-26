@@ -14,9 +14,10 @@
     <header>
       <h1>Test Vocabulary</h1>
     </header>
-    display 10 words
+    <h3 id="timer"></h3>
     <h3>Click here to start the game</h3>
     <button id="starter">Click Me!</button>
+    <div id="words-display"></div>
     <section class="float-container">
       <div class="float-child" id="left-side">
         <div class="defs"><span>Def 1:</span></div>
@@ -28,6 +29,7 @@
         <div class="defs"><span>Def 7:</span></div>
         <div class="defs"><span>Def 8:</span></div>
       </div>
+
       <div class="float-child">
         <form>
           <label for="answer1">Answer for 1:</label>
@@ -47,8 +49,9 @@
           <label for="answer8">Answer for 8:</label>
           <input type="text" id="answer8" name="answer8" /><br /><br />
         </form>
+        <button id="submit">Submit</button>
       </div>
     </section>
-    <button id="submit">Submit</button>
+    <div id="incorrect"></div>
   </body>
 </html>
