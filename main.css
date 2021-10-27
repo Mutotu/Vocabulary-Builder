@@ -26,17 +26,21 @@ body {
   display: grid;
   grid-template-columns: 5fr 2fr;
   grid-gap: 8px;
-  height: 20vmin;
+  height: 40vmin;
 }
 
 .float-child {
   width: 50%;
   /* float: left; */
-  padding: 20px;
+  padding: 10px;
 
   border: 1vmin solid rgb(46, 25, 25);
 }
 span {
   font-weight: bold;
   color: brown;
+}
+form > div {
+  padding-bottom: 12px;
+  border: 2px solid rgb(218, 176, 176);
 }

@@ -23,6 +23,8 @@ var words = [
   { alias: "a name that has been assumed temporarily" },
 ];
 
+document.body.addEventListener("click", (e) => console.log(e));
+let chances = 0;
 let form = document.getElementsByTagName("form");
 let submit = document.getElementById("submit");
 
@@ -32,115 +34,147 @@ let incorrect = document.getElementById("incorrect");
 let starter = document.getElementById("starter");
 let timer = document.getElementById("timer");
 //only keys of randomlypickedoBjects
-
-let correctCounter = 0;
-let keys = [];
-//inputs from form
-let answersInputs = [];
-//randomObjects
-let randomlyPickedObjs = randomizer(words);
-let levelCounter = 0;
-let randomkeys;
-function wait() {
-  randomkeys = randomizer(keys);
+let targets = document.getElementsByClassName("drop-targets");
+let correctCounter;
+function init() {
   correctCounter = 0;
-  keys = [];
-  answersInputs = [];
-  randomlyPickedObjs = randomizer(words);
-  levelCounter = 0;
-  keyExtract();
-  definitionInserter();
-}
+  let keys = [];
+  //inputs from form
+  let answersInputs = [];
+  //randomObjects
+  let randomlyPickedObjs = randomizer(words);
+  let levelCounter = 0;
+  let randomkeys;
+  console.log(randomlyPickedObjs);
+  function dropCreater() {
+    for (let i of targets) {
+      i.addEventListener("dragover", function (ev) {
+        ev.preventDefault();
+      });
+      i.addEventListener("drop", (ev) => {
+        ev.preventDefault();
 
-function keyExtract() {
-  for (let i of randomlyPickedObjs) {
-    // console.log(i);
-    for (let key in i) {
-      keys.push(key);
+        var data = ev.dataTransfer.getData("text");
+        ev.target.appendChild(document.getElementById(data));
+      });
     }
   }
+  dropCreater();
 
-  return keys;
-}
-keyExtract();
-
-function randomizer(array) {
-  let counter = 8;
-  let random = 0;
-  let result = [];
-  while (counter--) {
-    random = Math.floor(Math.random() * (counter + 1));
-    result.push(array[random]);
-    array.splice(random, 1);
+  function wait() {
+    randomkeys = randomizer(keys);
+    correctCounter = 0;
+    keys = [];
+    answersInputs = [];
+    randomlyPickedObjs = randomizer(words);
+    levelCounter = 0;
+    keyExtract();
+    definitionInserter();
   }
 
-  //Shuffle the array
-  return result.sort(() => Math.random() - 0.5);
-}
-
-function definitionInserter() {
-  randomkeys = randomizer(keys);
-  for (let i = 0; i < definitions.length; i++) {
-    definitions[i].innerHTML += " " + Object.values(randomlyPickedObjs[i]);
-    // wordsDisplay.append(buttonMaker(randomkeys[i]));
-    wordsDisplay.innerHTML += randomkeys[i] + " ";
-  }
-}
-definitionInserter();
-submit.addEventListener("click", compareAnswer);
-function compareAnswer() {
-  for (let i = 1; i <= 8; i++) {
-    let answer = document.getElementById(`answer${i}`);
-    answersInputs.push(answer.value);
-  }
-  checkAnswer();
-}
-
-function checkAnswer() {
-  for (let i = 0; i < randomlyPickedObjs.length; i++) {
-    for (let key in randomlyPickedObjs[i]) {
-      if (key === answersInputs[i]) {
-        correctCounter++;
-        levelCounter++;
+  function keyExtract() {
+    for (let i of randomlyPickedObjs) {
+      // console.log(i);
+      for (let key in i) {
+        keys.push(key);
       }
     }
-  }
-  nextLevel();
-}
-function nextLevel() {
-  wordsDisplay.innerHTML = "";
-  if (correctCounter > 0) {
-    for (let i = 0; i < definitions.length; i++) {
-      definitions[i].innerHTML = `<span>Def${i + 1}:<span> `;
 
-      document.querySelector(`#answer${i}`);
-    }
-    wait();
-  } else {
-    for (let i = 0; i < definitions.length; i++) {
-      definitions[i].innerHTML = `<span>Def${i + 1}:<span> `;
+    return keys;
+  }
+  keyExtract();
 
-      document.querySelector(`#answer${i}`);
+  function randomizer(array) {
+    let counter = 8;
+    let random = 0;
+    let result = [];
+    while (counter--) {
+      random = Math.floor(Math.random() * (counter + 1));
+      result.push(array[random]);
+      array.splice(random, 1);
     }
-    wait();
+
+    return result.sort(() => Math.random() - 0.5);
+  }
+
+  function definitionInserter() {
+    randomkeys = randomizer(keys);
+    for (let i = 0; i < definitions.length; i++) {
+      definitions[i].innerHTML += " " + Object.values(randomlyPickedObjs[i]);
+
+      buttonMaker(randomkeys[i], i);
+    }
+  }
+
+  definitionInserter();
+  submit.addEventListener("click", compareAnswer);
+  function compareAnswer() {
+    for (let i = 1; i <= 8; i++) {
+      let answer = document.getElementById(`answer${i}`);
+      console.log(answer);
+    }
+    checkAnswer();
+  }
+
+  function checkAnswer() {
+    for (let i = 0; i < randomlyPickedObjs.length; i++) {
+      for (let key in randomlyPickedObjs[i]) {
+        if (key === answersInputs[i]) {
+          correctCounter++;
+          levelCounter++;
+        }
+      }
+    }
+    nextLevel();
+  }
+  function nextLevel() {
+    console.log(correctCounter);
+
+    if (correctCounter > 0) {
+      for (let i = 0; i < definitions.length; i++) {
+        definitions[i].innerHTML = `<span>Def${i + 1}:<span> `;
+
+        document.querySelector(`#answer${i}`).value = " ";
+      }
+      wait();
+    } else {
+      for (let i = 0; i < definitions.length; i++) {
+        definitions[i].innerHTML = `<span>Def${i + 1}:<span> `;
+
+        document.querySelector(`#answer${i}`);
+      }
+      wait();
+    }
+  }
+  function buttonMaker(a, i) {
+    let button = document.createElement("button");
+
+    button.innerHTML = a;
+
+    button.setAttribute("draggable", true);
+    button.setAttribute("id", i);
+    button.addEventListener("drag", function (evt) {});
+    button.addEventListener("dragstart", function (ev) {
+      ev.dataTransfer.setData("text", ev.target.id);
+    });
+    wordsDisplay.append(button);
   }
 }
+
 let countTime = 0;
-starter.addEventListener("click", timer);
-function timer() {
+starter.addEventListener("click", timing);
+function timing() {
+  init();
   let time = setInterval(function () {
     timer.innerText = "Time: " + ++countTime;
-    if (countTime === 30) {
+    if (countTime === 30 || correctCounter < 4) {
       clearInterval(time);
+      incorrect.innerHTML = "You're late";
+    }
+    if (correctCounter > 4) {
+      clearInterval(time);
+      countTime = 0;
+      ///add refrefh
     }
   }, 1000);
-  section.removeEventListener("click", timer);
 }
-// function buttonMaker() {
-//   let button = document.createElement("button");
-//   for (let i = 0; i < randomkeys.length; i++) {
-//     button.innerHTML = randomkeys[i];
-//     wordsDisplay.append(button);
-//   }
-// }
-// buttonMaker();
