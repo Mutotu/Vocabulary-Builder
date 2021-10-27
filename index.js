@@ -235,9 +235,23 @@ function distanceAdjuster() {
     distance.style.height = "125px";
   } else if (chance === 0) {
     distance.style.height = "0px";
+    document
+      .getElementById("monster")
+      .firstChild.setAttribute("src", "Cookie.gif");
+    document.getElementById("intro").innerText = "Learn your words! lol";
+    let buttons = document.querySelectorAll("button");
+    for (let i of buttons) {
+      if (i.id === "replay") {
+        console.log(replay);
+        continue;
+      } else {
+        i.setAttribute("disabled", true);
+        console.log("rest");
+      }
+    }
   }
-  console.log("dist");
 }
+
 ////timing the game
 let countTime = 10;
 starter.addEventListener("click", timing);
