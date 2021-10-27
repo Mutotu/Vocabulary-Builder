@@ -21,6 +21,26 @@ var words = [
   { aggrandize: "embellish; increase the scope, power, or importance of" },
   { alacrity: "liveliness and eagerness" },
   { alias: "a name that has been assumed temporarily" },
+  { antithesis: "exact opposite" },
+  { apocryphal: "being of questionable authenticity" },
+  { approbation: "official acceptance or agreement" },
+  { arbitrary: "based on or subject to individual discretion or preference" },
+  { arboreal: "of or relating to or formed by trees" },
+  { arcane: "requiring secret or mysterious knowledge" },
+  { archetypal: "of an original type after which other things are patterned" },
+  { arrogate: "seize and take control without authority" },
+  { ascetic: "someone who practices self denial as a spiritual discipline" },
+  { aspersion: "a disparaging remark" },
+  { assiduous: "marked by care and persistent effort" },
+  { atrophy: "a decrease in size of an organ caused by disease or disuse" },
+  { bane: "something causing misery or death" },
+  { bashful: "self-consciously timid" },
+  { beguile: "influence by slyness" },
+  { bereft: "lacking or deprived of something" },
+  { blandishment: "flattery intended to persuade" },
+  { bilk: "cheat somebody out of what is due, especially money" },
+  { bombastic: "ostentatiously lofty in style" },
+  { cajole: "influence or urge by gentle urging, caressing, or flattering" },
 ];
 ////
 ///
@@ -29,7 +49,7 @@ var words = [
 /////////
 ///
 ////
-
+let distance = document.getElementById("distance");
 let form = document.getElementsByTagName("form");
 let submit = document.getElementById("submit");
 let chances = document.getElementById("level");
@@ -54,7 +74,7 @@ answersInputs = [];
 //randomObjects
 let randomlyPickedObjs = randomizer(words);
 ///missing
-let chance = 0;
+let chance = 2;
 ///shuffeling the keys
 let randomkeys = randomizer(keys);
 console.log(randomlyPickedObjs);
@@ -208,7 +228,16 @@ function buttonMaker(a, i) {
   });
   wordsDisplay.append(button);
 }
-
+function distanceAdjuster() {
+  //   distance.style.height = "0px";
+  //   //   distance.style.height = `${chance + 125}px`;
+  if (chance === 1) {
+    distance.style.height = "125px";
+  } else if (chance === 0) {
+    distance.style.height = "0px";
+  }
+  console.log("dist");
+}
 ////timing the game
 let countTime = 10;
 starter.addEventListener("click", timing);
@@ -228,11 +257,11 @@ function timing() {
       clearInterval(time);
       incorrect.innerHTML = `You got ${correctCounter} definitons!`;
       if (correctCounter > 4) {
-        chance++;
-        chances.innerHTML = `You have ${chance}`;
+        chances.innerHTML = `Your attempts=> ${chance}`;
       } else {
         chance--;
-        chances.innerHTML = `You have ${chance}`;
+        chances.innerHTML = `Your attempts=> ${chance}`;
+        distanceAdjuster();
       }
     }
   }, 1000);

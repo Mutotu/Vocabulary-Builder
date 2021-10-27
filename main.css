@@ -1,19 +1,10 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
-  margin: 0;
 
-  /* height: 100vh; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-/* section {
-  display: grid;
-  grid-template-columns: repeat(1, 6vmin);
-  grid-template-rows: repeat(8, 6vmin);
-  gap: 0.5vmin;
 }
 
 /* This selects the div elements */
@@ -52,7 +43,24 @@ body[disabled] {
   opacity: 0.7;
 }
 #wrong-display {
+  border-radius: 1em;
   border: 2px solid rgb(40, 30, 124);
   height: 8vmin;
   width: 30vmin;
+  background-color: rgb(144, 136, 214);
+  text-emphasis: center;
+}
+
+img {
+  width: 300px;
+}
+#kid-img {
+  width: 150px;
+}
+
+body {
+  /* background: url("back.jpeg"); */
+}
+#distance {
+  height: 250px;
 }
