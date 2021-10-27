@@ -22,8 +22,14 @@ var words = [
   { alacrity: "liveliness and eagerness" },
   { alias: "a name that has been assumed temporarily" },
 ];
-
-document.body.addEventListener("click", (e) => console.log(e));
+////
+///
+//////
+//  try to put button on the definitoisn maybe
+/////////not able to get values from button values properly
+///
+////
+// document.body.addEventListener("click", (e) => console.log(e));
 let chances = 0;
 let form = document.getElementsByTagName("form");
 let submit = document.getElementById("submit");
@@ -33,19 +39,27 @@ let wordsDisplay = document.getElementById("words-display");
 let incorrect = document.getElementById("incorrect");
 let starter = document.getElementById("starter");
 let timer = document.getElementById("timer");
+let next = document.getElementById("next");
 //only keys of randomlypickedoBjects
 let targets = document.getElementsByClassName("drop-targets");
-let correctCounter;
+//counting the correct answers
+let correctCounter = 0;
+let answersInputs = [];
 function init() {
   correctCounter = 0;
+  ///keys of objects from randomlypickedobjects
   let keys = [];
-  //inputs from form
-  let answersInputs = [];
+  //answers from user
+  answersInputs = [];
   //randomObjects
   let randomlyPickedObjs = randomizer(words);
+  ///missing
   let levelCounter = 0;
-  let randomkeys;
+  ///shuffeling the keys
+  let randomkeys = randomizer(keys);
   console.log(randomlyPickedObjs);
+
+  ///draggable
   function dropCreater() {
     for (let i of targets) {
       i.addEventListener("dragover", function (ev) {
@@ -61,8 +75,9 @@ function init() {
   }
   dropCreater();
 
+  /// supoosedly refresh the variables
   function wait() {
-    randomkeys = randomizer(keys);
+    randomkeys = [];
     correctCounter = 0;
     keys = [];
     answersInputs = [];
@@ -70,11 +85,12 @@ function init() {
     levelCounter = 0;
     keyExtract();
     definitionInserter();
+    buttonInserter();
   }
 
+  ////storing the keys of randomlypicedobjs to keys variable
   function keyExtract() {
     for (let i of randomlyPickedObjs) {
-      // console.log(i);
       for (let key in i) {
         keys.push(key);
       }
@@ -84,6 +100,7 @@ function init() {
   }
   keyExtract();
 
+  ///to get random data
   function randomizer(array) {
     let counter = 8;
     let random = 0;
@@ -97,55 +114,75 @@ function init() {
     return result.sort(() => Math.random() - 0.5);
   }
 
+  ///places the definitions (values from randomlypiskcedObjs)
   function definitionInserter() {
     randomkeys = randomizer(keys);
     for (let i = 0; i < definitions.length; i++) {
-      definitions[i].innerHTML += " " + Object.values(randomlyPickedObjs[i]);
+      definitions[i].innerHTML += Object.values(randomlyPickedObjs[i]);
+    }
+  }
 
+  function buttonInserter() {
+    for (let i = 0; i < randomkeys.length; i++) {
       buttonMaker(randomkeys[i], i);
     }
   }
-
   definitionInserter();
-  submit.addEventListener("click", compareAnswer);
-  function compareAnswer() {
-    for (let i = 1; i <= 8; i++) {
-      let answer = document.getElementById(`answer${i}`);
-      console.log(answer);
+  buttonInserter();
+  submit.addEventListener("click", getUserAnswers);
+  ///getting user answers
+  function getUserAnswers() {
+    for (let i = 0; i < targets.length; i++) {
+      let answer = targets[i];
+      if (answer.firstChild) {
+        answersInputs.push(answer.firstChild.innerText);
+      } else {
+        answersInputs.push("empty");
+      }
     }
+    console.log(answersInputs);
     checkAnswer();
   }
-
+  ///supposedly compare user answers with corrct answers
   function checkAnswer() {
     for (let i = 0; i < randomlyPickedObjs.length; i++) {
       for (let key in randomlyPickedObjs[i]) {
         if (key === answersInputs[i]) {
           correctCounter++;
-          levelCounter++;
         }
       }
     }
-    nextLevel();
+    // nextLevel();
   }
-  function nextLevel() {
-    console.log(correctCounter);
 
-    if (correctCounter > 0) {
-      for (let i = 0; i < definitions.length; i++) {
-        definitions[i].innerHTML = `<span>Def${i + 1}:<span> `;
-
-        document.querySelector(`#answer${i}`).value = " ";
+  function answerCleaner() {
+    for (let i = 0; i < targets.length; i++) {
+      let answer = targets[i];
+      if (answer.firstChild) {
+        answer.firstChild.remove();
+        console.log(answer.firstChild);
       }
-      wait();
-    } else {
-      for (let i = 0; i < definitions.length; i++) {
-        definitions[i].innerHTML = `<span>Def${i + 1}:<span> `;
-
-        document.querySelector(`#answer${i}`);
-      }
-      wait();
     }
   }
+  next.addEventListener("click", nextLevel);
+  ///supposedly go to the next game
+  function nextLevel() {
+    answerCleaner();
+    while (wordsDisplay.firstChild) {
+      wordsDisplay.firstChild.remove();
+      //   console.log(wordsDisplay.firstChild);
+    }
+    // console.log(wordsDisplay);
+
+    for (let i = 0; i < definitions.length; i++) {
+      definitions[i].innerHTML = `<span>Def ${i + 1}: </span>`;
+    }
+    wait();
+    console.log(randomkeys);
+    console.log(randomlyPickedObjs);
+  }
+
+  ///createds buttom with drag attributes
   function buttonMaker(a, i) {
     let button = document.createElement("button");
 
@@ -153,7 +190,7 @@ function init() {
 
     button.setAttribute("draggable", true);
     button.setAttribute("id", i);
-    button.addEventListener("drag", function (evt) {});
+    // button.addEventListener("drag", function (evt) {});
     button.addEventListener("dragstart", function (ev) {
       ev.dataTransfer.setData("text", ev.target.id);
     });
@@ -161,13 +198,14 @@ function init() {
   }
 }
 
-let countTime = 0;
+////timing the game
+let countTime = 30;
 starter.addEventListener("click", timing);
 function timing() {
   init();
   let time = setInterval(function () {
-    timer.innerText = "Time: " + ++countTime;
-    if (countTime === 30 || correctCounter < 4) {
+    timer.innerText = "Time: " + --countTime;
+    if (countTime === 0) {
       clearInterval(time);
       incorrect.innerHTML = "You're late";
     }

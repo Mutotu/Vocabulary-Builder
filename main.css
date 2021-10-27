@@ -27,6 +27,7 @@ body {
   grid-template-columns: 5fr 2fr;
   grid-gap: 8px;
   height: 40vmin;
+  width: 85vmin;
 }
 
 .float-child {
@@ -43,4 +44,5 @@ span {
 form > div {
   padding-bottom: 12px;
   border: 2px solid rgb(218, 176, 176);
+  height: 3vmin;
 }
