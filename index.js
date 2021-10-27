@@ -25,12 +25,11 @@ var words = [
 ////
 ///
 //////
-//  try to put button on the definitoisn maybe
-/////////not able to get values from button values properly
+
+/////////
 ///
 ////
-// document.body.addEventListener("click", (e) => console.log(e));
-let chances = 0;
+
 let form = document.getElementsByTagName("form");
 let submit = document.getElementById("submit");
 
@@ -129,9 +128,12 @@ function init() {
   }
   definitionInserter();
   buttonInserter();
+  //////////////////////
   submit.addEventListener("click", getUserAnswers);
   ///getting user answers
   function getUserAnswers() {
+    starter.setAttribute("disabled", true);
+    countTime = 1;
     for (let i = 0; i < targets.length; i++) {
       let answer = targets[i];
       if (answer.firstChild) {
@@ -140,7 +142,7 @@ function init() {
         answersInputs.push("empty");
       }
     }
-    console.log(answersInputs);
+    // console.log(answersInputs);
     checkAnswer();
   }
   ///supposedly compare user answers with corrct answers
@@ -149,10 +151,16 @@ function init() {
       for (let key in randomlyPickedObjs[i]) {
         if (key === answersInputs[i]) {
           correctCounter++;
+          if (targets[i].firstChild) {
+            targets[i].firstChild.style.backgroundColor = "green";
+          }
+        } else {
+          if (targets[i].firstChild) {
+            targets[i].firstChild.style.backgroundColor = "red";
+          }
         }
       }
     }
-    // nextLevel();
   }
 
   function answerCleaner() {
@@ -160,26 +168,28 @@ function init() {
       let answer = targets[i];
       if (answer.firstChild) {
         answer.firstChild.remove();
-        console.log(answer.firstChild);
+        // console.log(answer.firstChild);
       }
     }
   }
   next.addEventListener("click", nextLevel);
+
   ///supposedly go to the next game
   function nextLevel() {
+    countTime = 10;
+    timing();
+    console.log(countTime);
     answerCleaner();
     while (wordsDisplay.firstChild) {
       wordsDisplay.firstChild.remove();
-      //   console.log(wordsDisplay.firstChild);
     }
-    // console.log(wordsDisplay);
 
     for (let i = 0; i < definitions.length; i++) {
       definitions[i].innerHTML = `<span>Def ${i + 1}: </span>`;
     }
     wait();
-    console.log(randomkeys);
-    console.log(randomlyPickedObjs);
+    // console.log(randomkeys);
+    // console.log(randomlyPickedObjs);
   }
 
   ///createds buttom with drag attributes
@@ -199,7 +209,7 @@ function init() {
 }
 
 ////timing the game
-let countTime = 30;
+let countTime = 10;
 starter.addEventListener("click", timing);
 function timing() {
   init();
@@ -207,12 +217,13 @@ function timing() {
     timer.innerText = "Time: " + --countTime;
     if (countTime === 0) {
       clearInterval(time);
-      incorrect.innerHTML = "You're late";
-    }
-    if (correctCounter > 4) {
-      clearInterval(time);
-      countTime = 0;
-      ///add refrefh
+      if (correctCounter < 5) {
+        clearInterval(time);
+        incorrect.innerHTML = "Late";
+      } else {
+        clearInterval(time);
+        incorrect = "win";
+      }
     }
   }, 1000);
 }
