@@ -32,198 +32,210 @@ var words = [
 
 let form = document.getElementsByTagName("form");
 let submit = document.getElementById("submit");
-
+let chances = document.getElementById("level");
 let definitions = document.querySelectorAll("#left-side > div");
 let wordsDisplay = document.getElementById("words-display");
 let incorrect = document.getElementById("incorrect");
 let starter = document.getElementById("starter");
 let timer = document.getElementById("timer");
 let next = document.getElementById("next");
+let replay = document.getElementById("replay");
 //only keys of randomlypickedoBjects
 let targets = document.getElementsByClassName("drop-targets");
 //counting the correct answers
 let correctCounter = 0;
 let answersInputs = [];
-function init() {
+// function init() {
+correctCounter = 0;
+///keys of objects from randomlypickedobjects
+let keys = [];
+//answers from user
+answersInputs = [];
+//randomObjects
+let randomlyPickedObjs = randomizer(words);
+///missing
+let chance = 0;
+///shuffeling the keys
+let randomkeys = randomizer(keys);
+console.log(randomlyPickedObjs);
+let wrongCollector = [];
+///draggable
+function dropCreater() {
+  for (let i of targets) {
+    i.addEventListener("dragover", function (ev) {
+      ev.preventDefault();
+    });
+    i.addEventListener("drop", (ev) => {
+      ev.preventDefault();
+
+      var data = ev.dataTransfer.getData("text");
+      ev.target.appendChild(document.getElementById(data));
+    });
+  }
+}
+dropCreater();
+
+/// supoosedly refresh the variables
+function wait() {
+  randomkeys = [];
   correctCounter = 0;
-  ///keys of objects from randomlypickedobjects
-  let keys = [];
-  //answers from user
+  keys = [];
   answersInputs = [];
-  //randomObjects
-  let randomlyPickedObjs = randomizer(words);
-  ///missing
-  let levelCounter = 0;
-  ///shuffeling the keys
-  let randomkeys = randomizer(keys);
-  console.log(randomlyPickedObjs);
-
-  ///draggable
-  function dropCreater() {
-    for (let i of targets) {
-      i.addEventListener("dragover", function (ev) {
-        ev.preventDefault();
-      });
-      i.addEventListener("drop", (ev) => {
-        ev.preventDefault();
-
-        var data = ev.dataTransfer.getData("text");
-        ev.target.appendChild(document.getElementById(data));
-      });
-    }
-  }
-  dropCreater();
-
-  /// supoosedly refresh the variables
-  function wait() {
-    randomkeys = [];
-    correctCounter = 0;
-    keys = [];
-    answersInputs = [];
-    randomlyPickedObjs = randomizer(words);
-    levelCounter = 0;
-    keyExtract();
-    definitionInserter();
-    buttonInserter();
-  }
-
-  ////storing the keys of randomlypicedobjs to keys variable
-  function keyExtract() {
-    for (let i of randomlyPickedObjs) {
-      for (let key in i) {
-        keys.push(key);
-      }
-    }
-
-    return keys;
-  }
+  randomlyPickedObjs = randomizer(words);
+  // levelCounter = 0;
   keyExtract();
-
-  ///to get random data
-  function randomizer(array) {
-    let counter = 8;
-    let random = 0;
-    let result = [];
-    while (counter--) {
-      random = Math.floor(Math.random() * (counter + 1));
-      result.push(array[random]);
-      array.splice(random, 1);
-    }
-
-    return result.sort(() => Math.random() - 0.5);
-  }
-
-  ///places the definitions (values from randomlypiskcedObjs)
-  function definitionInserter() {
-    randomkeys = randomizer(keys);
-    for (let i = 0; i < definitions.length; i++) {
-      definitions[i].innerHTML += Object.values(randomlyPickedObjs[i]);
-    }
-  }
-
-  function buttonInserter() {
-    for (let i = 0; i < randomkeys.length; i++) {
-      buttonMaker(randomkeys[i], i);
-    }
-  }
   definitionInserter();
   buttonInserter();
-  //////////////////////
-  submit.addEventListener("click", getUserAnswers);
-  ///getting user answers
-  function getUserAnswers() {
-    starter.setAttribute("disabled", true);
-    countTime = 1;
-    for (let i = 0; i < targets.length; i++) {
-      let answer = targets[i];
-      if (answer.firstChild) {
-        answersInputs.push(answer.firstChild.innerText);
-      } else {
-        answersInputs.push("empty");
-      }
+}
+
+////storing the keys of randomlypicedobjs to keys variable
+function keyExtract() {
+  for (let i of randomlyPickedObjs) {
+    for (let key in i) {
+      keys.push(key);
     }
-    // console.log(answersInputs);
-    checkAnswer();
   }
-  ///supposedly compare user answers with corrct answers
-  function checkAnswer() {
-    for (let i = 0; i < randomlyPickedObjs.length; i++) {
-      for (let key in randomlyPickedObjs[i]) {
-        if (key === answersInputs[i]) {
-          correctCounter++;
-          if (targets[i].firstChild) {
-            targets[i].firstChild.style.backgroundColor = "green";
-          }
-        } else {
-          if (targets[i].firstChild) {
-            targets[i].firstChild.style.backgroundColor = "red";
-          }
+
+  return keys;
+}
+keyExtract();
+
+///to get random data//find the lionk
+function randomizer(array) {
+  let counter = 8;
+  let random = 0;
+  let result = [];
+  while (counter--) {
+    random = Math.floor(Math.random() * (counter + 1));
+    result.push(array[random]);
+    array.splice(random, 1);
+  }
+
+  return result.sort(() => Math.random() - 0.5);
+}
+
+///places the definitions (values from randomlypiskcedObjs)
+function definitionInserter() {
+  randomkeys = randomizer(keys);
+  for (let i = 0; i < definitions.length; i++) {
+    definitions[i].innerHTML += Object.values(randomlyPickedObjs[i]);
+  }
+}
+
+function buttonInserter() {
+  for (let i = 0; i < randomkeys.length; i++) {
+    buttonMaker(randomkeys[i], i);
+  }
+}
+
+//////////////////////
+submit.addEventListener("click", getUserAnswers);
+///getting user answers
+function getUserAnswers() {
+  starter.setAttribute("disabled", true);
+  countTime = 1;
+  for (let i = 0; i < targets.length; i++) {
+    let answer = targets[i];
+    if (answer.firstChild) {
+      answersInputs.push(answer.firstChild.innerText);
+    } else {
+      answersInputs.push("empty");
+    }
+  }
+  // console.log(answersInputs);
+  checkAnswer();
+}
+///supposedly compare user answers with corrct answers
+function checkAnswer() {
+  for (let i = 0; i < randomlyPickedObjs.length; i++) {
+    for (let key in randomlyPickedObjs[i]) {
+      if (key === answersInputs[i]) {
+        correctCounter++;
+        if (targets[i].firstChild) {
+          targets[i].firstChild.style.backgroundColor = "green";
+        }
+      } else {
+        if (targets[i].firstChild) {
+          targets[i].firstChild.style.backgroundColor = "red";
+          wrongCollector.push(targets[i].firstChild.innerText);
         }
       }
     }
   }
+}
 
-  function answerCleaner() {
-    for (let i = 0; i < targets.length; i++) {
-      let answer = targets[i];
-      if (answer.firstChild) {
-        answer.firstChild.remove();
-        // console.log(answer.firstChild);
-      }
+function answerCleaner() {
+  for (let i = 0; i < targets.length; i++) {
+    let answer = targets[i];
+    if (answer.firstChild) {
+      answer.firstChild.remove();
+      // console.log(answer.firstChild);
     }
   }
-  next.addEventListener("click", nextLevel);
+}
+next.addEventListener("click", nextLevel);
 
-  ///supposedly go to the next game
-  function nextLevel() {
-    countTime = 10;
-    timing();
-    console.log(countTime);
-    answerCleaner();
-    while (wordsDisplay.firstChild) {
-      wordsDisplay.firstChild.remove();
-    }
-
-    for (let i = 0; i < definitions.length; i++) {
-      definitions[i].innerHTML = `<span>Def ${i + 1}: </span>`;
-    }
-    wait();
-    // console.log(randomkeys);
-    // console.log(randomlyPickedObjs);
+///supposedly go to the next game
+function nextLevel() {
+  timing();
+  countTime = 10;
+  submit.removeAttribute("disabled");
+  console.log(countTime);
+  answerCleaner();
+  while (wordsDisplay.firstChild) {
+    wordsDisplay.firstChild.remove();
   }
 
-  ///createds buttom with drag attributes
-  function buttonMaker(a, i) {
-    let button = document.createElement("button");
-
-    button.innerHTML = a;
-
-    button.setAttribute("draggable", true);
-    button.setAttribute("id", i);
-    // button.addEventListener("drag", function (evt) {});
-    button.addEventListener("dragstart", function (ev) {
-      ev.dataTransfer.setData("text", ev.target.id);
-    });
-    wordsDisplay.append(button);
+  for (let i = 0; i < definitions.length; i++) {
+    definitions[i].innerHTML = `<span>Def ${i + 1}: </span>`;
   }
+  wait();
+  // console.log(randomkeys);
+  // console.log(randomlyPickedObjs);
+}
+
+///createds buttom with drag attributes
+function buttonMaker(a, i) {
+  let button = document.createElement("button");
+
+  button.innerHTML = a;
+
+  button.setAttribute("draggable", true);
+  button.setAttribute("id", i);
+  // button.addEventListener("drag", function (evt) {});
+  button.addEventListener("dragstart", function (ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+  });
+  wordsDisplay.append(button);
 }
 
 ////timing the game
 let countTime = 10;
 starter.addEventListener("click", timing);
 function timing() {
-  init();
+  incorrect.innerHTML = "Time is moving!!";
+  definitionInserter();
+  buttonInserter();
+  starter.setAttribute("disabled", true);
   let time = setInterval(function () {
     timer.innerText = "Time: " + --countTime;
+
     if (countTime === 0) {
+      let wrongDisplay = document.getElementById("wrong-display");
+
+      wrongDisplay.innerHTML = wrongCollector;
+      submit.setAttribute("disabled", true);
       clearInterval(time);
-      if (correctCounter < 5) {
-        clearInterval(time);
-        incorrect.innerHTML = "Late";
+      incorrect.innerHTML = `You got ${correctCounter} definitons!`;
+      if (correctCounter > 4) {
+        chance++;
+        chances.innerHTML = `You have ${chance}`;
       } else {
-        clearInterval(time);
-        incorrect = "win";
+        chance--;
+        chances.innerHTML = `You have ${chance}`;
       }
     }
   }, 1000);
 }
+
+replay.addEventListener("click", () => window.location.reload());
