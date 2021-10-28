@@ -153,6 +153,7 @@ submit.addEventListener("click", getUserAnswers);
 ///getting user answers
 function getUserAnswers() {
   starter.setAttribute("disabled", true);
+
   countTime = 1;
   for (let i = 0; i < targets.length; i++) {
     let answer = targets[i];
@@ -164,6 +165,7 @@ function getUserAnswers() {
   }
   // console.log(answersInputs);
   checkAnswer();
+  noMonster();
 }
 ///supposedly compare user answers with corrct answers
 function checkAnswer() {
@@ -171,6 +173,7 @@ function checkAnswer() {
     for (let key in randomlyPickedObjs[i]) {
       if (key === answersInputs[i]) {
         correctCounter++;
+
         if (targets[i].firstChild) {
           targets[i].firstChild.style.backgroundColor = "green";
         }
@@ -198,7 +201,7 @@ next.addEventListener("click", nextLevel);
 ///supposedly go to the next game
 function nextLevel() {
   timing();
-  countTime = 10;
+  countTime = 30;
   submit.removeAttribute("disabled");
   console.log(countTime);
   answerCleaner();
@@ -219,7 +222,7 @@ function buttonMaker(a, i) {
   let button = document.createElement("button");
 
   button.innerHTML = a;
-
+  button.style.margin = "4px";
   button.setAttribute("draggable", true);
   button.setAttribute("id", i);
   // button.addEventListener("drag", function (evt) {});
@@ -239,6 +242,7 @@ function distanceAdjuster() {
       .getElementById("monster")
       .firstChild.setAttribute("src", "Cookie.gif");
     document.getElementById("intro").innerText = "Learn your words! lol";
+    document.getElementById("kid").firstChild.remove();
     let buttons = document.querySelectorAll("button");
     for (let i of buttons) {
       if (i.id === "replay") {
@@ -251,9 +255,18 @@ function distanceAdjuster() {
     }
   }
 }
+function noMonster() {
+  if (correctCounter > 7) {
+    document.getElementById("monster").firstChild.style.height = "100px";
+    document.getElementById("monster").firstChild.style.width = "100px";
+    console.log("mosnter");
+  } else if (correctCounter > 15) {
+    document.getElementById("monster").firstChild.remove();
+  }
+}
 
 ////timing the game
-let countTime = 10;
+let countTime = 30;
 starter.addEventListener("click", timing);
 function timing() {
   incorrect.innerHTML = "Time is moving!!";
@@ -270,7 +283,7 @@ function timing() {
       submit.setAttribute("disabled", true);
       clearInterval(time);
       incorrect.innerHTML = `You got ${correctCounter} definitons!`;
-      if (correctCounter > 4) {
+      if (correctCounter > 3) {
         chances.innerHTML = `Your attempts=> ${chance}`;
       } else {
         chance--;

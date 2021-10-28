@@ -1,16 +1,20 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
-
+  font-weight: bolder;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-image: url("back.jpeg");
+  opacity: 0.85;
+  background-color: rgba(116, 113, 113, 0.25);
 }
 
 /* This selects the div elements */
 .defs {
   border: 1vmin solid rgb(218, 176, 176);
   height: 6vmin;
+  border-radius: 1em;
 }
 
 .float-container {
@@ -27,15 +31,19 @@ body {
   padding: 10px;
 
   border: 1vmin solid rgb(46, 25, 25);
+  border-radius: 2em;
 }
 span {
-  font-weight: bold;
-  color: brown;
+  font-weight: bolder;
+  color: rgb(211, 8, 8);
 }
 form > div {
   padding-bottom: 12px;
-  border: 2px solid rgb(218, 176, 176);
+  border: 3px solid rgb(218, 176, 176);
   height: 3vmin;
+  text-align: center;
+  background-color: aliceblue;
+  border-radius: 2em;
 }
 
 body[disabled] {
@@ -53,14 +61,49 @@ body[disabled] {
 
 img {
   width: 300px;
+  opacity: 0.9;
+  border-radius: 2em;
 }
 #kid-img {
   width: 150px;
 }
 
-body {
-  /* background: url("back.jpeg"); */
-}
 #distance {
   height: 250px;
+}
+button {
+  font-weight: bolder;
+  border-radius: 2em;
+}
+button:hover {
+  background-color: rgb(40, 30, 124);
+
+  color: aliceblue;
+}
+
+pre {
+  border: 2px solid rgb(40, 30, 124);
+  border-radius: 1em;
+  font-weight: bolder;
+  background-color: rgb(210, 241, 241);
+}
+#replay {
+  width: 70px;
+  height: 50px;
+  background-color: darkgoldenrod;
+}
+
+#submit,
+#next {
+  margin: 8px;
+  height: 40px;
+}
+
+#timer {
+  border-radius: 1em;
+  border: 2px solid rgb(40, 30, 124);
+  height: 25px;
+  width: 85px;
+  background-color: rgb(144, 136, 214);
+  text-emphasis: center;
 }
