@@ -12,7 +12,7 @@ body {
 
 /* This selects the div elements */
 .defs {
-  border: 1vmin solid rgb(218, 176, 176);
+  border: 1vmin solid rgb(211, 182, 182);
   height: 6vmin;
   border-radius: 1em;
 }

@@ -235,7 +235,7 @@ function distanceAdjuster() {
   //   distance.style.height = "0px";
   //   //   distance.style.height = `${chance + 125}px`;
   if (chance === 1) {
-    distance.style.height = "125px";
+    distance.style.height = "100px";
   } else if (chance === 0) {
     distance.style.height = "0px";
     document
@@ -246,7 +246,7 @@ function distanceAdjuster() {
     let buttons = document.querySelectorAll("button");
     for (let i of buttons) {
       if (i.id === "replay") {
-        console.log(replay);
+        // console.log(replay);
         continue;
       } else {
         i.setAttribute("disabled", true);
@@ -257,14 +257,27 @@ function distanceAdjuster() {
 }
 function noMonster() {
   if (correctCounter > 7) {
+    document
+      .getElementById("monster")
+      .firstChild.setAttribute("src", "giphy3.gif");
+    document.getElementById("kid").firstChild.remove();
+  } else if (correctCounter > 15) {
     document.getElementById("monster").firstChild.style.height = "100px";
     document.getElementById("monster").firstChild.style.width = "100px";
-    console.log("mosnter");
-  } else if (correctCounter > 15) {
-    document.getElementById("monster").firstChild.remove();
   }
 }
 
+///make a study sheet
+function practice() {
+  let result = {};
+  for (let i = 0; i < words.length; i++) {
+    if (words[i]) {
+    }
+  }
+
+  console.log(result);
+  return result;
+}
 ////timing the game
 let countTime = 30;
 starter.addEventListener("click", timing);
@@ -279,7 +292,11 @@ function timing() {
     if (countTime === 0) {
       let wrongDisplay = document.getElementById("wrong-display");
 
-      wrongDisplay.innerHTML = wrongCollector;
+      //   wrongDisplay.innerHTML = wrongCollector;
+      for (let i of wrongCollector) {
+        // console.log("wrong");
+        wrongDisplay.innerHTML += i + "\n,";
+      }
       submit.setAttribute("disabled", true);
       clearInterval(time);
       incorrect.innerHTML = `You got ${correctCounter} definitons!`;
@@ -289,6 +306,8 @@ function timing() {
         chance--;
         chances.innerHTML = `Your attempts=> ${chance}`;
         distanceAdjuster();
+
+        // console.log("practice");
       }
     }
   }, 1000);
