@@ -235,7 +235,10 @@ function distanceAdjuster() {
   //   distance.style.height = "0px";
   //   //   distance.style.height = `${chance + 125}px`;
   if (chance === 1) {
-    distance.style.height = "100px";
+    // console.log("aaaa");
+    // distance.style.height = "100px";
+    document.getElementById("monster").firstChild.style.height = "250px";
+    document.getElementById("kid").firstChild.style.height = "80px";
   } else if (chance === 0) {
     distance.style.height = "0px";
     document
@@ -268,16 +271,7 @@ function noMonster() {
 }
 
 ///make a study sheet
-function practice() {
-  let result = {};
-  for (let i = 0; i < words.length; i++) {
-    if (words[i]) {
-    }
-  }
-
-  console.log(result);
-  return result;
-}
+function practice() {}
 ////timing the game
 let countTime = 30;
 starter.addEventListener("click", timing);

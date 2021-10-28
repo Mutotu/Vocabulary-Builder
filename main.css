@@ -8,6 +8,8 @@ body {
   background-image: url("back.jpeg");
   opacity: 0.85;
   background-color: rgba(116, 113, 113, 0.25);
+  height: 100px;
+  margin-top: 350px;
 }
 
 /* This selects the div elements */
@@ -19,9 +21,9 @@ body {
 
 .float-container {
   display: grid;
-  grid-template-columns: 5fr 2fr;
+  grid-template-columns: 5fr 3fr;
   grid-gap: 8px;
-  height: 40vmax;
+  height: 15vmax;
   width: 80vmax;
 }
 
@@ -97,6 +99,7 @@ pre {
 #next {
   margin: 8px;
   height: 40px;
+  background-color: darkgoldenrod;
 }
 
 #timer {
@@ -106,4 +109,8 @@ pre {
   width: 85px;
   background-color: rgb(144, 136, 214);
   text-emphasis: center;
+}
+
+#distance {
+  height: 90px;
 }
