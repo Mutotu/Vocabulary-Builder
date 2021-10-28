@@ -9,7 +9,7 @@ body {
   opacity: 0.85;
   background-color: rgba(116, 113, 113, 0.25);
   height: 100px;
-  margin-top: 350px;
+  margin-top: 400px;
 }
 
 /* This selects the div elements */
@@ -21,7 +21,7 @@ body {
 
 .float-container {
   display: grid;
-  grid-template-columns: 5fr 3fr;
+  grid-template-columns: 5.1fr 2.8fr;
   grid-gap: 8px;
   height: 15vmax;
   width: 80vmax;

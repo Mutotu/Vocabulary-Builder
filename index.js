@@ -201,7 +201,7 @@ next.addEventListener("click", nextLevel);
 ///supposedly go to the next game
 function nextLevel() {
   timing();
-  countTime = 30;
+  countTime = 31;
   submit.removeAttribute("disabled");
   console.log(countTime);
   answerCleaner();
@@ -237,10 +237,10 @@ function distanceAdjuster() {
   if (chance === 1) {
     // console.log("aaaa");
     // distance.style.height = "100px";
-    document.getElementById("monster").firstChild.style.height = "250px";
+    document.getElementById("monster").firstChild.style.height = "300px";
     document.getElementById("kid").firstChild.style.height = "80px";
   } else if (chance === 0) {
-    distance.style.height = "0px";
+    nomnom();
     document
       .getElementById("monster")
       .firstChild.setAttribute("src", "Cookie.gif");
@@ -271,7 +271,26 @@ function noMonster() {
 }
 
 ///make a study sheet
-function practice() {}
+function practice() {
+  let result = {};
+  for (let i = 0; i < wrongCollector.length; i++) {
+    for (let i = 0; i < words.length; i++) {
+      for (let key in words[i]) {
+        console.log(key);
+      }
+    }
+  }
+  return result;
+}
+
+function omnius() {
+  let audio = new Audio("omnius.wav");
+  audio.play();
+}
+function nomnom() {
+  let audio = new Audio("nomnom.mp3");
+  audio.play();
+}
 ////timing the game
 let countTime = 30;
 starter.addEventListener("click", timing);
@@ -282,7 +301,7 @@ function timing() {
   starter.setAttribute("disabled", true);
   let time = setInterval(function () {
     timer.innerText = "Time: " + --countTime;
-
+    omnius();
     if (countTime === 0) {
       let wrongDisplay = document.getElementById("wrong-display");
 
@@ -308,3 +327,5 @@ function timing() {
 }
 
 replay.addEventListener("click", () => window.location.reload());
+
+/////add audio
