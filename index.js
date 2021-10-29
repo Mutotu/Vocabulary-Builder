@@ -328,7 +328,7 @@ let targets = document.getElementsByClassName("drop-targets");
 //counting the correct answers
 let correctCounter = 0;
 let correctAll = 0;
-
+// console.log(correctAll);
 let answersInputs = [];
 // function init() {
 // correctCounter = 0;
@@ -434,6 +434,9 @@ function getUserAnswers() {
   checkAnswer();
   noMonster();
   correctAdder();
+  document.getElementById(
+    "totalCorrect"
+  ).innerHTML = `Your total correct => ${correctAll}`;
 }
 
 function checkAnswer() {
@@ -469,7 +472,7 @@ function nextLevel() {
   countTime = 30;
   countTime = 31;
   submit.removeAttribute("disabled");
-  console.log(countTime);
+  // console.log(countTime);
   answerCleaner();
   while (wordsDisplay.firstChild) {
     wordsDisplay.firstChild.remove();
@@ -517,13 +520,12 @@ function distanceAdjuster() {
   }
 }
 function noMonster() {
-  if (correctAll > 7) {
+  if (correctAll > 15) {
     document
       .getElementById("monster")
       .firstChild.setAttribute("src", "giphy3.gif");
     document.getElementById("kid-img").remove();
-  }
-  if (correctAll > 15) {
+  } else if (correctAll > 7) {
     document.getElementById("monster").firstChild.style.height = "100px";
     document.getElementById("monster").firstChild.style.width = "100px";
     if (correctCounter < 4) {
