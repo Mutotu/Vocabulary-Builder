@@ -310,6 +310,7 @@ var words = [
 ];
 ///
 //////
+
 let wrongDisplay = document.getElementById("wrong-display");
 let distance = document.getElementById("distance");
 let form = document.getElementsByTagName("form");
@@ -344,6 +345,11 @@ let randomkeys = randomizer(keys);
 console.log(randomlyPickedObjs);
 let wrongCollector = [];
 ///draggable
+function disableBegining() {
+  submit.setAttribute("disabled", true);
+  next.setAttribute("disabled", true);
+}
+disableBegining();
 function correctAdder() {
   correctAll += correctCounter;
 }
@@ -414,6 +420,7 @@ submit.addEventListener("click", getUserAnswers);
 function getUserAnswers() {
   wrongDisplay.innerHTML = "";
   starter.setAttribute("disabled", true);
+  next.removeAttribute("disabled");
   countTime = 1;
   for (let i = 0; i < targets.length; i++) {
     let answer = targets[i];
@@ -457,6 +464,7 @@ function answerCleaner() {
 next.addEventListener("click", nextLevel);
 
 function nextLevel() {
+  next.setAttribute("disabled", true);
   timing();
   countTime = 30;
   countTime = 31;
@@ -538,6 +546,7 @@ function nomnom() {
 let countTime = 30;
 starter.addEventListener("click", timing);
 function timing() {
+  submit.removeAttribute("disabled");
   incorrect.innerHTML = "Time is moving!!";
   definitionInserter();
   buttonInserter();
